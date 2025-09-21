@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayan Mobile Shop Services</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- QR Code Library CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f8f0;
+        }
+        .container {
+            max-width: 600px;
+        }
+        .card {
+            background-color: #dcf8dc;
+            border: 1px solid #b2f5b3;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .button-service {
+            background-color: #48bb78;
+            color: #ffffff;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        .button-service:hover {
+            background-color: #38a169;
+            transform: scale(1.02);
+        }
+        .qr-section {
+            display: none;
+        }
+        .message-icon-success {
+            color: #10B981;
+        }
+        .message-icon-error {
+            color: #EF4444;
+        }
+        #loadingSpinner, #extractSpinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 p-4 sm:p-8">
+
+    <div class="container mx-auto">
+        
+        <!-- Header & Logo Section -->
+        <header class="text-center mb-10">
+            <h1 class="text-5xl font-extrabold text-blue-800 tracking-tight leading-tight mb-2">Ayan Mobile Shop</h1>
+            <p class="text-xl text-gray-600 font-medium">Digital Services</p>
+        </header>
+
+        <!-- Main Service Forms Container -->
+        <div id="mainFormContainer" class="flex flex-col items-center space-y-8">
+            
+            <!-- Gemini-powered ✨ Voter Card Details Extractor Section -->
+            <div class="card p-6 rounded-lg shadow-xl w-full">
+                <h2 class="text-xl font-bold text-center text-blue-800 mb-4 px-4 py-2 border-b-2 border-blue-800">
+                    ✨ Voter Card Details Extractor
+                </h2>
+                <div class="space-y-4 mt-6">
+                    <div>
+                        <label for="voter-card-image" class="block text-sm font-medium text-gray-700 mb-1">
+                            Voter Card Ki Photo Upload Karen:
+                        </label>
+                        <input type="file" id="voter-card-image" accept="image/*" class="w-full px-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <button id="extractDetailsBtn" class="button-service w-full py-3 rounded-lg font-bold shadow-lg flex items-center justify-center space-x-2">
+                        <span id="extractBtnText">✨ Details Extract Karen</span>
+                        <div id="extractSpinner" class="hidden"></div>
+                    </button>
+                    <div id="extractedData" class="hidden mt-4 bg-white p-4 rounded-lg shadow-inner border border-gray-200">
+                        <p class="font-bold mb-2">Extracted Details:</p>
+                        <p id="extractedVoterCardNumber" class="text-sm text-gray-600">Voter Card Number: <span class="font-semibold text-gray-800"></span></p>
+                        <p id="extractedName" class="text-sm text-gray-600">Naam: <span class="font-semibold text-gray-800"></span></p>
+                        <p id="extractedState" class="text-sm text-gray-600">State: <span class="font-semibold text-gray-800"></span></p>
+                        <button id="populateFormBtn" class="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                            Form Mein Bharen
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Card 1: Voter PDF Download Without Mobile -->
+            <div class="card p-6 rounded-lg shadow-xl w-full">
+                <h2 class="text-xl font-bold text-center text-blue-800 mb-4 px-4 py-2 border-b-2 border-blue-800">
+                    <span class="text-2xl">↓</span> Voter PDF Download Without Mobile <span class="text-2xl">↓</span>
+                </h2>
+                <form id="digitalDownloadForm" class="service-form space-y-4 mt-6">
+                    <input type="text" name="VotarCardNumber" id="digitalVoterCardNumber" placeholder="VOTAR CARD NUMBER" class="w-full px-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                    <input type="text" name="State" id="digitalState" placeholder="STATE" class="w-full px-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                    <input type="tel" name="WhatsappNumber" id="digitalWhatsapp" placeholder="WHATSAPP NUMBER" class="w-full px-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                    <button type="submit" data-price="50" class="button-service w-full py-3 rounded-lg font-bold shadow-lg">Submit and Pay ₹50</button>
+                </form>
+            </div>
+
+            <!-- Service Card 2: Correction Trick -->
+            <div class="card p-6 rounded-lg shadow-xl w-full">
+                <h2 class="text-xl font-bold text-center text-blue-800 mb-4 px-4 py-2 border-b-2 border-blue-800">
+                    <span class="text-2xl">↓</span> Voter Download and Correction Trick in Digital Format Without Mobile Number <br/> <span class="text-green-600 font-extrabold">↓ Free Lifetime</span>
+                </h2>
+                <form id="correctionForm" class="service-form space-y-4 mt-6">
+                    <input type="text" name="Name" id="correctionName" placeholder="Name" class="w-full px-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                    <input type="tel" name="WhatsappNumber" id="correctionWhatsapp" placeholder="Whatsapp Number for Trick Video" class="w-full px-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                    <button type="submit" data-price="399" class="button-service w-full py-3 rounded-lg font-bold shadow-lg">Submit and Pay ₹399</button>
+                </form>
+            </div>
+            
+        </div>
+
+        <!-- QR Code and UTR Section -->
+        <div id="qrSection" class="qr-section p-8 rounded-lg shadow-xl text-center mt-8 max-w-sm mx-auto bg-white">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">QR Code</h2>
+            <p class="text-gray-600 mb-4">QR कोड स्कैन करें या UPI ID पर भुगतान करें:</p>
+            
+            <div class="flex items-center justify-center p-4 bg-blue-100 rounded-lg border border-blue-200 mb-6">
+                <p id="upiId" class="font-mono text-blue-800 text-lg sm:text-xl font-semibold select-all mr-4">7840818969@naviaxis</p>
+                <button id="copyBtn" class="bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M8 2a2 2 0 00-2 2v2a2 2 0 002 2h4a2 2 0 002-2V4a2 2 0 00-2-2H8z" />
+                        <path d="M5 8a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2v-6a2 2 0 00-2-2H5z" />
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="qrcode" class="max-w-xs mx-auto mb-4 border border-gray-300 rounded-lg shadow-md p-2"></div>
+            
+            <p class="text-red-500 text-sm mt-4">भुगतान के बाद, कृपया UTR नंबर दर्ज करें।</p>
+            
+            <form id="utrForm" class="mt-6 space-y-4">
+                <input type="text" id="utrNumber" name="UTRNumber" placeholder="UTR नंबर दर्ज करें" class="w-full px-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                <button type="submit" id="utrSubmitBtn" class="button-service w-full py-3 rounded-lg font-bold shadow-lg flex items-center justify-center space-x-2">
+                    <span id="buttonText">Submit UTR</span>
+                    <div id="loadingSpinner" class="hidden"></div>
+                </button>
+            </form>
+            
+            <button id="backBtn" class="mt-4 px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                Back
+            </button>
+        </div>
+
+        <!-- Message Modal/Box -->
+        <div id="messageBox" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4">
+            <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center transform transition-all duration-300 scale-95 opacity-0" id="messageContent">
+                <div class="flex justify-center mb-4">
+                    <svg id="messageIcon" class="h-16 w-16 message-icon-success" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-8.99" />
+                        <path d="M12 2v10" />
+                        <path d="M12 12l4 4" />
+                    </svg>
+                </div>
+                <p id="messageText" class="text-lg font-semibold text-gray-800"></p>
+                <button onclick="closeMessage()" class="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    OK
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Google Apps Script deployment URL ko is variable mein daalen
+        const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx45mcLy0Ha-j6O_k9nHmZZLIh69GLkmTGBa-S9kXGgE-oguhjevIWMK4u5Y5R0b2IxqA/exec';
+        // API Key ko yahan khali chhod dein
+        const API_KEY = "";
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
+
+        const mainFormContainer = document.getElementById('mainFormContainer');
+        const qrSection = document.getElementById('qrSection');
+        const messageBox = document.getElementById('messageBox');
+        const messageText = document.getElementById('messageText');
+        const messageContent = document.getElementById('messageContent');
+        const messageIcon = document.getElementById('messageIcon');
+        const utrForm = document.getElementById('utrForm');
+        const utrNumberInput = document.getElementById('utrNumber');
+        const backBtn = document.getElementById('backBtn');
+        const utrSubmitBtn = document.getElementById('utrSubmitBtn');
+        const buttonText = document.getElementById('buttonText');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        let storedFormData = {}; // Temporary storage for form data
+
+        // Gemini API feature elements
+        const voterCardImageInput = document.getElementById('voter-card-image');
+        const extractDetailsBtn = document.getElementById('extractDetailsBtn');
+        const extractBtnText = document.getElementById('extractBtnText');
+        const extractSpinner = document.getElementById('extractSpinner');
+        const extractedDataSection = document.getElementById('extractedData');
+        const extractedVoterCardNumberSpan = document.getElementById('extractedVoterCardNumber').querySelector('span');
+        const extractedNameSpan = document.getElementById('extractedName').querySelector('span');
+        const extractedStateSpan = document.getElementById('extractedState').querySelector('span');
+        const populateFormBtn = document.getElementById('populateFormBtn');
+
+        // UPI ID details
+        const upiId = '7840818969@naviaxis';
+        const name = 'Naviaxis Pvt Ltd';
+
+        function showMessage(text, isSuccess = true) {
+            messageText.textContent = text;
+            messageBox.classList.remove('hidden');
+            messageBox.classList.add('flex');
+            
+            if (isSuccess) {
+                messageIcon.classList.remove('message-icon-error');
+                messageIcon.classList.add('message-icon-success');
+                messageIcon.innerHTML = `<path d="M22 11.08V12a10 10 0 1 1-5.93-8.99"/><path d="M12 2v10"/><path d="M12 12l4 4"/>`;
+            } else {
+                messageIcon.classList.remove('message-icon-success');
+                messageIcon.classList.add('message-icon-error');
+                messageIcon.innerHTML = `<path d="M18 6L6 18M6 6l12 12"/>`;
+            }
+            
+            setTimeout(() => {
+                messageContent.classList.remove('scale-95');
+                messageContent.classList.add('scale-100', 'opacity-100');
+            }, 50);
+        }
+
+        function closeMessage() {
+            messageContent.classList.remove('scale-100', 'opacity-100');
+            messageContent.classList.add('scale-95');
+            setTimeout(() => {
+                messageBox.classList.remove('flex');
+                messageBox.classList.add('hidden');
+            }, 300);
+        }
+        
+        function returnToHome() {
+            qrSection.style.display = 'none';
+            mainFormContainer.style.display = 'flex';
+            utrNumberInput.value = '';
+            storedFormData = {};
+        }
+
+        function generateQRCode(amount) {
+            const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent('Ayan Mobile Service')}`;
+            
+            const qrcodeDiv = document.getElementById('qrcode');
+            qrcodeDiv.innerHTML = '';
+
+            new QRCode(qrcodeDiv, {
+                text: upiUrl,
+                width: 256,
+                height: 256,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        }
+
+        async function sendDataToGoogleSheet(data) {
+            utrSubmitBtn.disabled = true;
+            buttonText.classList.add('hidden');
+            loadingSpinner.classList.remove('hidden');
+
+            try {
+                const response = await fetch(GOOGLE_SHEET_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.type === 'opaque') {
+                    showMessage('आपका फॉर्म और भुगतान सफलतापूर्वक सबमिट हो गया है! आपको मुख्य पेज पर रीडायरेक्ट किया जा रहा है।', true);
+                    setTimeout(returnToHome, 3000);
+                } else {
+                    throw new Error('Form submission failed.');
+                }
+            } catch (error) {
+                console.error('Submission Error:', error);
+                showMessage('सबमिशन में कोई समस्या आई। कृपया फिर से प्रयास करें।', false);
+            } finally {
+                utrSubmitBtn.disabled = false;
+                buttonText.classList.remove('hidden');
+                loadingSpinner.classList.add('hidden');
+            }
+        }
+        
+        // --- Gemini API Integration ---
+        extractDetailsBtn.addEventListener('click', async () => {
+            const file = voterCardImageInput.files[0];
+            if (!file) {
+                showMessage('कृपया एक voter card ki photo select karen.', false);
+                return;
+            }
+
+            extractDetailsBtn.disabled = true;
+            extractBtnText.classList.add('hidden');
+            extractSpinner.classList.remove('hidden');
+            extractedDataSection.classList.add('hidden');
+
+            try {
+                // Image ko Base64 string mein convert karein
+                const base64Image = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result.split(',')[1]);
+                    reader.onerror = error => reject(error);
+                    reader.readAsDataURL(file);
+                });
+
+                // Gemini API payload
+                const payload = {
+                    contents: [{
+                        parts: [
+                            { text: `Ek voter card image se, "voterCardNumber", "name" aur "state" extract karen. Output ek JSON object mein den. Yadi koi jankari nahi milti hai to null rakhen.` },
+                            { inlineData: { mimeType: file.type, data: base64Image } }
+                        ]
+                    }],
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                "voterCardNumber": { "type": "STRING" },
+                                "name": { "type": "STRING" },
+                                "state": { "type": "STRING" }
+                            }
+                        }
+                    }
+                };
+                
+                // API call karein
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                const jsonText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                const extracted = JSON.parse(jsonText);
+                
+                // Extracted data ko display karein
+                if (extracted && extracted.voterCardNumber) {
+                    extractedVoterCardNumberSpan.textContent = extracted.voterCardNumber || 'N/A';
+                    extractedNameSpan.textContent = extracted.name || 'N/A';
+                    extractedStateSpan.textContent = extracted.state || 'N/A';
+                    extractedDataSection.classList.remove('hidden');
+                } else {
+                    showMessage('Voter card ki details extract nahi ho paayi. Kripya saaf photo upload karen.', false);
+                }
+
+            } catch (error) {
+                console.error('Extraction Error:', error);
+                showMessage('Details extract karte samay koi samasya aayi.', false);
+            } finally {
+                extractDetailsBtn.disabled = false;
+                extractBtnText.classList.remove('hidden');
+                extractSpinner.classList.add('hidden');
+            }
+        });
+
+        // Extracted data se form bharen
+        populateFormBtn.addEventListener('click', () => {
+            const voterCardNumber = extractedVoterCardNumberSpan.textContent;
+            const name = extractedNameSpan.textContent;
+            const state = extractedStateSpan.textContent;
+
+            // 'Voter Download' form ko bharen
+            document.getElementById('digitalVoterCardNumber').value = voterCardNumber !== 'N/A' ? voterCardNumber : '';
+            document.getElementById('digitalState').value = state !== 'N/A' ? state : '';
+            
+            // 'Correction Trick' form ko bhi bharen
+            document.getElementById('correctionName').value = name !== 'N/A' ? name : '';
+        });
+
+        // Listeners for all service forms
+        const serviceForms = document.querySelectorAll('.service-form');
+        serviceForms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                storedFormData = {};
+                formData.forEach((value, key) => {
+                    storedFormData[key] = value;
+                });
+
+                storedFormData.ServiceType = form.id === 'digitalDownloadForm' ? 'Voter PDF Download Without Mobile' : 'Correction Trick';
+
+                const button = e.target.querySelector('button[type="submit"]');
+                const amount = button.dataset.price;
+                
+                showMessage('आपका फॉर्म सबमिट हो गया है। कृपया भुगतान करें।');
+                mainFormContainer.style.display = 'none';
+                qrSection.style.display = 'block';
+                generateQRCode(amount);
+            });
+        });
+
+        // Listener for UTR form
+        utrForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const utr = utrNumberInput.value.trim();
+
+            if (utr.length > 0) {
+                storedFormData.UTRNumber = utr;
+                sendDataToGoogleSheet(storedFormData);
+            } else {
+                showMessage('कृपया UTR नंबर दर्ज करें।', false);
+            }
+        });
+        
+        // Listener for Copy UPI ID button
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const upiText = document.getElementById('upiId').textContent;
+            try {
+                const tempInput = document.createElement('input');
+                tempInput.value = upiText;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                showMessage('UPI ID सफलतापूर्वक कॉपी हो गई है!');
+            } catch (err) {
+                console.error('Copy to clipboard failed:', err);
+                showMessage('कॉपी करने में त्रुटि हुई। कृपया मैन्युअल रूप से कॉपी करें।', false);
+            }
+        });
+
+        // Listener for Back button
+        backBtn.addEventListener('click', function() {
+            returnToHome();
+        });
+    </script>
+</body>
+</html>
